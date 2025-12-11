@@ -1,79 +1,95 @@
 import { useState } from "react";
-import { employeeStore } from "../stores/employeeStore";
-import { TextField, Button, Paper, Stack } from "@mui/material";
+import { type EmployeeDto } from "../models/employee";
 
-function EmployeeForm() {
-  const [form, setForm] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    position: "",
-  });
+const genderOptions = ["Male", "Female", "Other"];
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setForm({ ...form, [e.target.name]: e.target.value });
+interface Props {
+  initialEmployee?: EmployeeDto;
+  onSubmit: (employee: EmployeeDto) => void;
+}
+
+export default function EmployeeForm({ initialEmployee, onSubmit }: Props) {
+  const [employee, setEmployee] = useState<EmployeeDto>(
+    initialEmployee ?? {
+      firstName: "",
+      lastName: "",
+      email: "",
+      position: "",
+      dateHired: new Date().toISOString(),
+      gender: "Male" // 👈 default value
+    }
+  );
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
+    const { name, value } = e.target;
+    setEmployee({ ...employee, [name]: value });
   }
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-
-    if (!form.firstName || !form.lastName || !form.email) {
-      alert("Required fields missing");
-      return;
-    }
-
-    employeeStore.createEmployee({
-      id: "",
-      dateHired: new Date().toISOString(),
-      ...form,
-    });
-
-    setForm({ firstName: "", lastName: "", email: "", position: "" });
+    onSubmit(employee);
   }
 
   return (
-    <Paper sx={{ p: 3, mb: 4 }}>
-      <form onSubmit={handleSubmit}>
-        <Stack spacing={2}>
-          <TextField
-            label="First Name"
-            name="firstName"
-            value={form.firstName}
-            onChange={handleChange}
-            required
-          />
+    <form onSubmit={handleSubmit}>
+      {/* --- First Name --- */}
+      <input
+        type="text"
+        name="firstName"
+        value={employee.firstName}
+        onChange={handleChange}
+        placeholder="First Name"
+      />
 
-          <TextField
-            label="Last Name"
-            name="lastName"
-            value={form.lastName}
-            onChange={handleChange}
-            required
-          />
+      {/* --- Last Name --- */}
+      <input
+        type="text"
+        name="lastName"
+        value={employee.lastName}
+        onChange={handleChange}
+        placeholder="Last Name"
+      />
 
-          <TextField
-            label="Email"
-            name="email"
-            type="email"
-            value={form.email}
-            onChange={handleChange}
-            required
-          />
+      {/* --- Email --- */}
+      <input
+        type="email"
+        name="email"
+        value={employee.email}
+        onChange={handleChange}
+        placeholder="Email"
+      />
 
-          <TextField
-            label="Position"
-            name="position"
-            value={form.position}
-            onChange={handleChange}
-          />
+      {/* --- Position --- */}
+      <input
+        type="text"
+        name="position"
+        value={employee.position}
+        onChange={handleChange}
+        placeholder="Position"
+      />
 
-          <Button type="submit" variant="contained">
-            Save Employee
-          </Button>
-        </Stack>
-      </form>
-    </Paper>
+      {/* --- Date Hired --- */}
+      <input
+        type="date"
+        name="dateHired"
+        value={employee.dateHired.substring(0, 10)}
+        onChange={handleChange}
+      />
+
+      {/* --- Gender Select (NEW) --- */}
+      <select
+        name="gender"
+        value={employee.gender}
+        onChange={handleChange}
+      >
+        {genderOptions.map((g) => (
+          <option key={g} value={g}>
+            {g}
+          </option>
+        ))}
+      </select>
+
+      <button type="submit">Save</button>
+    </form>
   );
 }
-
-export default EmployeeForm;

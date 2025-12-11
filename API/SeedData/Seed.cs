@@ -14,11 +14,11 @@ namespace API.SeedData
                 {
                     var employees = new List<Employee>()
                     {
-                        new Employee{ FirstName="Jane", LastName="Doe", Email="jane@test.com", Position="Analyst", DateHired=DateTime.Today.AddDays(-1293) },
-                        new Employee{ FirstName="Bob", LastName="Nugget", Email="bob@test.com", Position="Senior ", DateHired=DateTime.Today.AddDays(-1200) },
-                        new Employee{ FirstName="Tom", LastName="Landers", Email="tom@test.com", Position="Middle Analyst", DateHired=DateTime.Today.AddDays(-1239) },
-                        new Employee{ FirstName="Jim", LastName="Jump", Email="jim@test.com", Position="Junior Analyst", DateHired=DateTime.Today.AddDays(-1333) },
-                        new Employee{ FirstName="Tim", LastName="Handy", Email="tim@test.com", Position="Analyst", DateHired=DateTime.Today.AddDays(-1123) },
+                        new Employee{ FirstName="Jane", LastName="Doe", Email="jane@test.com", Position="Analyst", DateHired=DateTime.Today.AddDays(-1293), Gender="Female" },
+                        new Employee{ FirstName="Bob", LastName="Nugget", Email="bob@test.com", Position="Senior ", DateHired=DateTime.Today.AddDays(-1200), Gender="Male" },
+                        new Employee{ FirstName="Tom", LastName="Landers", Email="tom@test.com", Position="Middle Analyst", DateHired=DateTime.Today.AddDays(-1239), Gender="Male" },
+                        new Employee{ FirstName="Jim", LastName="Jump", Email="jim@test.com", Position="Junior Analyst", DateHired=DateTime.Today.AddDays(-1333), Gender="Male" },
+                        new Employee{ FirstName="Tim", LastName="Handy", Email="tim@test.com", Position="Analyst", DateHired=DateTime.Today.AddDays(-1123), Gender="Male" },
                     };
 
                     context.AddRange(employees);

@@ -5,4 +5,5 @@ export type EmployeeDto = {
   email: string;
   position?: string;
   dateHired: string; // or Date, depending on API
+  gender: string;
 }
