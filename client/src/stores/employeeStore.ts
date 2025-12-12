@@ -1,14 +1,7 @@
 import { makeAutoObservable, runInAction } from "mobx";
-import { EmployeeApi } from "../api/agent";
-
-export interface Employee {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  position?: string;
-  dateHired: string;
-}
+import { agent } from "../api/agent";
+import type { Employee } from "../models/employee";
+import type { EmployeeFormValues } from "../schemas/employeeSchema";
 
 class EmployeeStore {
   employees: Employee[] = [];
@@ -20,17 +13,14 @@ class EmployeeStore {
 
   loadEmployees = async () => {
     this.loading = true;
-
     try {
-      const list = await EmployeeApi.list();
-
+      const list = await agent.list();
       runInAction(() => {
         this.employees = list;
         this.loading = false;
       });
     } catch (error) {
       console.error(error);
-
       runInAction(() => {
         this.loading = false;
       });
@@ -39,8 +29,7 @@ class EmployeeStore {
 
   createEmployee = async (employee: Employee) => {
     try {
-      const created = await EmployeeApi.create(employee);
-
+      const created = await agent.create(employee);
       runInAction(() => {
         this.employees.push(created);
       });
@@ -48,6 +37,17 @@ class EmployeeStore {
       console.error(error);
     }
   };
+
+  createEmployeeRQ = async (data: EmployeeFormValues) => {
+    try {
+      const created = await agent.createRQ(data);
+      runInAction(() => {
+        this.employees.push(created);
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }
 
 export const employeeStore = new EmployeeStore();

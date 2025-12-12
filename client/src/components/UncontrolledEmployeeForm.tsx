@@ -1,6 +1,6 @@
 import { useRef } from "react";
-import axios from "axios";
 import type { EmployeeDto } from "../models/employee";
+import { agent } from "../api/agent";
 
 const genderOptions = ["Male", "Female", "Other"];
 
@@ -30,7 +30,7 @@ export default function UncontrolledEmployeeForm() {
 
     // Example axios POST
     try {
-      await axios.post("http://localhost:5000/api/employees", employee);
+      await agent.create(employee);
       alert("Employee saved!");
     } catch (err) {
       console.error(err);

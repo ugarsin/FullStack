@@ -4,6 +4,7 @@ import EmployeeList from "./components/EmployeeList";
 import { UncontrolledExample } from "./components/UncontrolledExample";
 import type { EmployeeDto } from "./models/employee";
 import UncontrolledEmployeeForm from "./components/UncontrolledEmployeeForm";
+import EmployeeFormRQ from "./components/EmployeeFormRQ";
 
 export default function App() {
 
@@ -31,6 +32,10 @@ export default function App() {
         Employee Uncontrolled form
       </Typography>
       <UncontrolledEmployeeForm />
+      <Typography variant="h5" gutterBottom sx={{ background: "blue", color: "white"}}>
+        Employee form React Query + Zod validation
+      </Typography>
+      <EmployeeFormRQ />
     </Container>
   );
 }
